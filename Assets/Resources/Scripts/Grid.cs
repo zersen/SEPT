@@ -17,6 +17,7 @@ public class Grid : MonoBehaviour
 
 	public bool createGrid = false;
 	public bool clearGrid = false;
+	public GameObject SlotPrefabs;
 
 	public List<GameObject>slots = new List<GameObject>();
 	// Use this for initialization
@@ -53,12 +54,20 @@ public class Grid : MonoBehaviour
 			{
 				for(int x=0;x<XCoords;x++)
 				{
-					GameObject go = new GameObject("Slot"+index.ToString());
-					go.transform.position = new Vector3(
-						StartingPosition.x+x*XSpacing,
-						StartingPosition.y,
-						StartingPosition.z-y*YSpacing
-						);
+					GameObject go = Instantiate(SlotPrefabs,Vector3.zero,Quaternion.identity)as GameObject;
+					go.name = "Slots"+index.ToString();
+					switch(orientation)
+					{
+					case Orientation.TopLeft:
+
+						go.transform.position = new Vector3(
+							StartingPosition.x+x*XSpacing,
+							StartingPosition.y,
+							StartingPosition.z-y*YSpacing
+							);
+						break;
+					}
+					go.transform.parent = gameObject.transform;
 					index++;
 					slots.Add (go);
 				}
